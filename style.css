@@ -1,0 +1,38 @@
+.container {
+    width: 960px;
+    margin: auto;
+    justify-content: space-between;
+}
+
+h1 {
+    text-align: center;
+    width: 100%;
+}
+
+header .container {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+}
+
+.comment {
+    font: italic bold 23px;
+}
+
+.logo {
+    width: 100px;    
+}
+
+.logo img {
+    width: 100%;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    display: inline-block;
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Python Portfolio</title>
+  <meta name="description" content="Portfolio Site">
+  <meta name="author" content="RV">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>Playing With Python</h1>
+    </div>
+  </header>
+
+  <h2>A simple interactive line chart showing Python vs. R in job postings data (from JPA report in Analyst)</h2>
+
+  <iframe id="igraph" style="border: none;" src="https://ac-coder.github.io/jpa_charts/" width="100%" height="525" scrolling="no" seamless="seamless"></iframe>
+  
+  <figure>
+    <pre>
+      <code>
+        # import relevant libraries
+
+        import matplotlib.pyplot as plt
+        import pandas as pd
+        import numpy as np
+
+        # read in the data
+
+        df = pd.read_csv('posting_data.csv', index_col = 0)
+
+        # clean the data
+
+        dates = list(df.columns.values.tolist())
+        better_dates = [i[:3] for i in dates]
+
+        # fetching Python postings
+
+        new_py_postings = list(df.iloc[0].tolist())
+        better_py_postings = [i.replace(",", "") for i in new_py_postings]
+
+        # using map() to perform conversion 
+
+        py_corrected = list(map(int, better_py_postings))
+
+        # fetching R postings
+
+        new_R_postings = list(df.iloc[1].tolist())
+        better_R_postings = [i.replace(",", "") for i in new_R_postings]
+
+        # using map() to perform conversion
+
+        R_corrected = list(map(int, better_R_postings))
+
+        # constructing the plot
+
+        plt.plot(better_dates, py_corrected)
+        plt.plot(better_dates, R_corrected)
+        plt.show()
+      </code>
+    </pre>
+  </figure>    
+
+  <h2>An interactive mapbox map that provides state, population, lat, and lon for 10 cities. (Note: Since this is just an example, the bubble sizes represent a made up variable called "size"):</h2>
+  
+  <iframe id="igraph" style="border: none;" src="https://ac-coder.github.io/ed_desert/" width="100%" height="400" scrolling="no" seamless="seamless"></iframe>
+ <figure>
+  <pre>
+    <code>
+      import pandas as pd
+      us_cities = pd.read_csv("new_test.csv")
+      
+      import plotly.express as px
+      
+      fig = px.scatter_mapbox(us_cities, lat="lat", lon="lon", hover_name="City", hover_data=["State", "Population"],
+                              color_discrete_sequence=["#41d592"], opacity= 0.5, zoom=3, height=400, size= "size")
+      fig.update_layout(mapbox_style="open-street-map")
+      fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+      fig.show()
+    </code>
+  </pre>
+</figure>
+
+<h2>A choropleth map (copied from an example on Plotly's documentation site) </h2>
+<iframe id="igraph" style="border: none;" src="https://ac-coder.github.io/choro/" width="100%" height="400" scrolling="no" seamless="seamless"></iframe>
+
+<figure>
+  <pre>
+    <code>
+      from urllib.request import urlopen
+      import json
+      with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+          counties = json.load(response)
+
+      import pandas as pd
+      df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+                   dtype={"fips": str})
+
+      import plotly.express as px
+
+      fig = px.choropleth_mapbox(df, geojson=counties, locations='fips', color='unemp',
+                           color_continuous_scale="Viridis", 
+                           range_color=(0, 12),
+                           mapbox_style="carto-positron",
+                           zoom=3, center = {"lat": 37.0902, "lon": -95.7129},
+                           opacity=0.5,
+                           labels={'unemp':'unemployment rate'}
+                          )
+      fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+      fig.show()
+    </code>
+  </pre>
+</figure>
+
+
+</body>
+</html>
